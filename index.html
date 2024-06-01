@@ -7,28 +7,49 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-    <h1>Нарисуй 5 кружечков (2, 4, 6, 8, 10)</h1>
-    <p>Числа в кружечках это число итерации</p>
-    <P>1. Задаем с какого числа начинать подсчет</p>
-    <p>2. Сколько цыклов нужно проходить</p>
-    <p>3. На сколько увеличивать итерацию</p>
-    
-    <div class="input-container">
-        <label for="startValue">for(let i = </label>
-        <input type="number" id="startValue" name="startValue" value="0">
+    <div id="level1" class="level-container" style="display:block;">
+        <h1>Нарисуй 3 кружечка (-4, 1, 6)</h1>
         
-        <label for="endCondition">; i &lt;</label>
-        <input type="number" id="endCondition" name="endCondition" value="0">
-        
-        <label for="stepValue">; i = i + </label>
-        <input type="number" id="stepValue" name="stepValue" value="1">
-        ; ) {
-        
+        <div class="input-container">
+            <label for="startValue">for(let i = </label>
+            <input type="number" id="startValue" name="startValue" value="2">
+            
+            <label for="endCondition">; i &lt;</label>
+            <input type="number" id="endCondition" name="endCondition" value="12">
+            
+            <label for="stepValue">; i = i + </label>
+            <input type="number" id="stepValue" name="stepValue" value="2">
+            ; ) {
+        </div>
+        <div class="circle-container" id="circleContainer"></div>
+        <span class="left">}</span>
+        <button class="button" onclick="drawCircles()">Нарисовать</button>
+        <div id="message" class="message"></div>
     </div>
-    <div class="circle-container" id="circleContainer"></div>
-    <span class="left">}</span>
-    <button class="button" onclick="drawCircles()">Нарисовать</button>
+
+    <button class="button" id="nextLevelButton" onclick="goToNextLevel()" style="display:none;">Перейти на следующий уровень</button>
+
+    <div id="level2" class="level-container" style="display:none;">
+        <h1>Нарисуй 4 кружечка (9, 6, 3, 0)</h1>
+        
+        <div class="input-container">
+            <label for="startValue2">for(let i = </label>
+            <input type="number" id="startValue2" name="startValue" value="1">
+            
+            <label for="endCondition2">; i &gt;</label>
+            <input type="number" id="endCondition2" name="endCondition" value="1">
+            
+            <label for="stepValue2">; i = i - </label>
+            <input type="number" id="stepValue2" name="stepValue" value="1">
+            ; ) {
+        </div>
+        <div class="circle-container" id="circleContainer2"></div>
+        <span class="left">}</span>
+        <button class="button" onclick="drawCircles2()">Нарисовать</button>
+        <div id="message2" class="message"></div>
+    </div>
+
+    
     <script src="script.js"></script>
 </body>
 </html>
