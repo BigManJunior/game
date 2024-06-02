@@ -4,10 +4,6 @@ const tasks = [
         code: `let numbers = [6, 24, 347, 408, 506];
 let sum = 0;
 
-for (let i = 0; i < numbers.length; i++) {
-    sum += numbers[i];
-}
-
 console.log(sum);`,
         answer: 1291
     },
