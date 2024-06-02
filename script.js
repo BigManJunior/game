@@ -1,99 +1,109 @@
-let level = 1;
+const tasks = [
+    {
+        title: 'Задача 1: Какая сумма всех чисел в массиве',
+        code: `let numbers = [6, 24, 347, 408, 506];
+let sum = 0;
 
-function drawCircles() {
-    let startValue = parseInt(document.getElementById('startValue').value);
-    let endCondition = parseInt(document.getElementById('endCondition').value);
-    let stepValue = parseInt(document.getElementById('stepValue').value);
-    let circleContainer = document.getElementById('circleContainer');
-    let message = document.getElementById('message');
-    circleContainer.innerHTML = ''; // Очистить контейнер перед рисованием новых кружочков
-    message.innerHTML = ''; // Очистить сообщение
+for (let i = 0; i < numbers.length; i++) {
+    sum += numbers[i];
+}
 
-    let i = startValue;
-    function addCircle() {
-        if (i < endCondition) {
-            let circle = document.createElement('div');
-            circle.className = 'circle';
-            circle.textContent = i; // Установка текстового содержимого кружочка
-            circleContainer.appendChild(circle);
-            i += stepValue;
-            setTimeout(addCircle, 500); // Задержка в 500 миллисекунд (0.5 секунды) между каждым кружочком
+console.log(sum);`,
+        answer: 1291
+    },
+    {
+        title: 'Задача 2: Первое число из массива',
+        code: `let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+console.log(numbers[0]);`,
+        answer: 1
+    }
+];
+
+let currentTask = 0;
+
+var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
+    lineNumbers: true,
+    mode: "javascript",
+    theme: "default"
+});
+
+function showTask(taskIndex) {
+    const task = tasks[taskIndex - 1];
+    document.getElementById('taskTitle').innerText = task.title;
+    editor.setValue(task.code);
+    currentTask = taskIndex - 1;
+
+    // Check if the task is completed from localStorage
+    for (let i = 0; i < tasks.length; i++) {
+        if (localStorage.getItem('task' + (i + 1) + 'Completed')) {
+            document.querySelectorAll('.tasks li')[i].classList.add('active');
+        }
+    }
+}
+
+// Show the first task by default and check progress
+showTask(1);
+
+// If the first task is completed, add the 'active' class to the second task
+if (localStorage.getItem('task1Completed')) {
+    document.getElementById('task2').classList.add('active');
+}
+
+function runCode() {
+    var code = editor.getValue();
+    var outputElement = document.getElementById('output');
+    outputElement.textContent = ''; // Clear previous output
+
+    try {
+        // Override console.log to capture logs
+        var originalConsoleLog = console.log;
+        var logOutput = '';
+        console.log = function (message) {
+            logOutput += message + '\n';
+        };
+
+        // Execute the user code
+        new Function(code)();
+
+        // Restore console.log and display captured logs
+        console.log = originalConsoleLog;
+        outputElement.textContent = logOutput || 'Code executed successfully. No output.';
+
+        // Check answer if current task has an answer
+        if (tasks[currentTask].answer !== undefined) {
+            let userResult;
+            if (Array.isArray(tasks[currentTask].answer)) {
+                userResult = JSON.parse(logOutput.trim());
+            } else {
+                userResult = parseInt(logOutput.trim());
+            }
+
+            if (JSON.stringify(userResult) === JSON.stringify(tasks[currentTask].answer)) {
+                outputElement.textContent = logOutput + '\nПравильно! Перейдите к следующей задаче.';
+                document.querySelectorAll('.tasks li')[currentTask + 1].classList.add('active');
+                // Save progress to localStorage
+                localStorage.setItem('task' + (currentTask + 1) + 'Completed', true);
+            } else {
+                outputElement.textContent = logOutput + '\nНеправильно. Попробуйте еще раз.';
+            }
+        }
+
+    } catch (e) {
+        outputElement.textContent = logOutput + '\nError: ' + e.message;
+    }
+}
+
+// Show the first task by default and check progress
+function checkProgress() {
+    for (let i = 0; i < tasks.length; i++) {
+        if (localStorage.getItem('task' + (i + 1) + 'Completed')) {
+            console.log('Task ' + (i + 1) + ' is completed.');
         } else {
-            checkLevelCompletion();
+            console.log('Task ' + (i + 1) + ' is not completed.');
         }
     }
-    addCircle();
 }
 
-function checkLevelCompletion() {
-    let circles = document.querySelectorAll('.circle');
-    let expectedValues = [-4, 1, 6];
-    let correctPlacement = true;
-
-    circles.forEach((circle, index) => {
-        if (parseInt(circle.textContent) !== expectedValues[index]) {
-            correctPlacement = false;
-        }
-    });
-
-    let message = document.getElementById('message');
-    let nextLevelButton = document.getElementById('nextLevelButton');
-    if (correctPlacement && circles.length === expectedValues.length) {
-        level++;
-        message.innerHTML = `Поздравляем! Вы перешли на уровень ${level}.`;
-        nextLevelButton.style.display = 'block'; // Показать кнопку перехода на следующий уровень
-    } else {
-        message.innerHTML = 'Пожалуйста, попробуйте снова.';
-    }
-}
-
-function goToNextLevel() {
-    document.getElementById('level1').style.display = 'none'; // Скрыть уровень 1
-    document.getElementById('nextLevelButton').style.display = 'none'; // Скрыть кнопку перехода
-    document.getElementById('level2').style.display = 'block'; // Показать уровень 2
-}
-
-function drawCircles2() {
-    let startValue = parseInt(document.getElementById('startValue2').value);
-    let endCondition = parseInt(document.getElementById('endCondition2').value);
-    let stepValue = parseInt(document.getElementById('stepValue2').value);
-    let circleContainer = document.getElementById('circleContainer2');
-    let message = document.getElementById('message2');
-    circleContainer.innerHTML = ''; // Очистить контейнер перед рисованием новых кружочков
-    message.innerHTML = ''; // Очистить сообщение
-
-    let i = startValue;
-    function addCircle2() {
-        if (i > endCondition) {
-            let circle = document.createElement('div');
-            circle.className = 'circle';
-            circle.textContent = i; // Установка текстового содержимого кружочка
-            circleContainer.appendChild(circle);
-            i -= stepValue;
-            setTimeout(addCircle2, 500); // Задержка в 500 миллисекунд (0.5 секунды) между каждым кружочком
-        } else {
-            checkLevelCompletionLevel2();
-        }
-    }
-    addCircle2();
-}
-
-function checkLevelCompletionLevel2() {
-    let circles = document.querySelectorAll('#circleContainer2 .circle');
-    let expectedValues = [9, 6, 3, 0];
-    let correctPlacement = true;
-
-    circles.forEach((circle, index) => {
-        if (parseInt(circle.textContent) !== expectedValues[index]) {
-            correctPlacement = false;
-        }
-    });
-
-    let message = document.getElementById('message2');
-    if (correctPlacement && circles.length === expectedValues.length) {
-        level++;
-        message.innerHTML = `Поздравляем! Вы перешли на уровень ${level}.`;
-    } else {
-        message.innerHTML = 'Пожалуйста, попробуйте снова.';
-    }
-}
+// Show the first task by default and check progress
+showTask(1);
+checkProgress();
