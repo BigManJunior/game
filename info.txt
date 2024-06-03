@@ -1,0 +1,3 @@
+cd game
+
+git add .

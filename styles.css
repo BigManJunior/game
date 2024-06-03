@@ -89,15 +89,23 @@ body {
     margin-top: 20px;
 }
 
+.CodeMirror-lines, #output {
+    text-align: left;
+    font-size: 18px;
+}
+
 /* Стили для мобильных устройств */
 @media only screen and (max-width: 600px) {
-   
+    .CodeMirror-lines, #output {
+        text-align: left;
+        font-size: 14px;
+    }
 }
 
 #taskContainer {
     max-width: 800px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 20px 0;
 }
 
 #code {
@@ -124,6 +132,11 @@ ul.tasks {
 ul.tasks li {
     padding: 10px;
     cursor: pointer;
+}
+
+ul.tasks li.currentTask {
+    background-color: #0056b3;
+    color: #fff;
 }
 
 ul.tasks li.active {
