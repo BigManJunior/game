@@ -1,3 +1,13 @@
 cd game
 
+git clone https://github.com/BigManJunior/game.git
+
 git add .
+
+git commit -m "version 1"
+
+git pull origin main
+
+git push origin main
+
+git push origin main --force
