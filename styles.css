@@ -96,5 +96,27 @@ button:hover {
     height: 200px;
 }
 
+ul.tasks {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+}
+
+ul.tasks li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+ul.tasks li.currentTask {
+    background-color: #0056b3;
+    color: #fff;
+}
+
+ul.tasks li.active {
+    background: #007BFF;
+    color: #fff;
+}
+
+
 
 

@@ -17,7 +17,7 @@ git status
 git add .
 
 # Закоммитить изменения
-git commit -m "Your commit message"
+git commit -m "Version 1"
 
 # Синхронизировать с удаленным репозиторием
 git pull origin main

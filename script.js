@@ -36,8 +36,20 @@ for (let i = 0; i < arr.length; i++) {
     cat.classList.add('cat');
     content.appendChild(cat);
 }`
+    },
+    {
+        title: 'Задача 2: Найти максимальное значение в массиве',
+        code: `let content = document.getElementById('content');
+content.innerHTML = '';
+
+const numbers = [3, 7, 2, 5, 10, 6, 8];
+let max = numbers[0];
+
+content.innerHTML = 'Максимальное значение: ' + max;`
     }
 ];
+
+let currentTask = 0;
 
 var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
     lineNumbers: true,
@@ -52,7 +64,11 @@ function showTask(taskIndex) {
     currentTask = taskIndex - 1;
 
     document.querySelectorAll('.tasks li').forEach((li, index) => {
-
+        if (index === currentTask) {
+            li.classList.add('currentTask');
+        } else {
+            li.classList.remove('currentTask');
+        }
     });
 }
 

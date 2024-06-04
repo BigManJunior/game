@@ -10,6 +10,13 @@
 <body>
     <div id="taskContainer">
         <h1 id="taskTitle"></h1>
+        <!-- <p>createElement('div') - создает div с класом cat</p>
+        <p>classList.add('cat') - присваивает класс .cat</p>
+        <p>appendChild(cat); - добавляет елемент в html</p> -->
+        <ul class="tasks">
+            <li id="task1" onclick="showTask(1)">Задача 1</li>
+            <li id="task2" onclick="showTask(2)">Задача 2</li>
+        </ul>
         <textarea id="code"></textarea>
         <button onclick="runCode()">Run Code</button>
         <div id="content"></div>
